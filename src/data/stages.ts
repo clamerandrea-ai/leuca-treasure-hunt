@@ -6,8 +6,8 @@ export const stages: Stage[] = [
   {
     id: 1,
     name: 'Porto Vecchio',
-    lat: 39.7935,
-    lng: 18.3548,
+    lat: 39.7968,
+    lng: 18.3616,
     proximityRadius: 50,
     hint: 'Tutto inizia dove le barche dei pescatori dormono la notte. Cerca il molo più antico, quello dove il tufo è mangiato dal sale.',
     puzzle: {
@@ -23,8 +23,8 @@ export const stages: Stage[] = [
   {
     id: 2,
     name: 'Sfida: La Pizzica dei Contrabbandieri',
-    lat: 39.7938,
-    lng: 18.3553,
+    lat: 39.7965,
+    lng: 18.3612,
     proximityRadius: 80,
     hint: 'Ferruccio dice: "Prima di proseguire, dovete dimostrare che avete il sangue salentino nelle vene!" Restate nei pressi del porto.',
     puzzle: {
@@ -39,8 +39,8 @@ export const stages: Stage[] = [
   {
     id: 3,
     name: 'Lungomare Colombo',
-    lat: 39.7942,
-    lng: 18.3558,
+    lat: 39.7975,
+    lng: 18.3565,
     proximityRadius: 50,
     hint: "Cammina dove i signori dell'800 passeggiavano al tramonto. La strada è intitolata a chi scoprì un mondo nuovo.",
     puzzle: {
@@ -54,8 +54,8 @@ export const stages: Stage[] = [
   {
     id: 4,
     name: 'Le Ville',
-    lat: 39.7950,
-    lng: 18.3540,
+    lat: 39.7990,
+    lng: 18.3555,
     proximityRadius: 60,
     hint: 'Cercate le case che sembrano uscite da un sogno moresco. I ricchi venivano qui quando Leuca era la Costa Azzurra del Sud.',
     puzzle: {
@@ -69,8 +69,8 @@ export const stages: Stage[] = [
   {
     id: 5,
     name: 'Sfida: Foto da Contrabbandiere',
-    lat: 39.7955,
-    lng: 18.3541,
+    lat: 39.7988,
+    lng: 18.3558,
     proximityRadius: 80,
     hint: 'Ferruccio dice: "Un buon contrabbandiere sa mimetizzarsi. Dimostratemi che sapete farlo!" Restate nella zona delle ville.',
     puzzle: {
@@ -85,8 +85,8 @@ export const stages: Stage[] = [
   {
     id: 6,
     name: 'Cascata Monumentale',
-    lat: 39.7962,
-    lng: 18.3542,
+    lat: 39.7972,
+    lng: 18.3645,
     proximityRadius: 50,
     hint: "Dove l'acqua dolce della Puglia intera finisce il suo viaggio e si tuffa nel mare. Conta i gradini se hai fiato.",
     puzzle: {
@@ -100,8 +100,8 @@ export const stages: Stage[] = [
   {
     id: 7,
     name: 'Colonna Mariana',
-    lat: 39.7972,
-    lng: 18.3535,
+    lat: 39.7962,
+    lng: 18.3678,
     proximityRadius: 40,
     hint: 'Sali fino in cima, dove la Madonna guarda il mare da quasi 400 anni. Un grande piazzale con colonnato ti aspetta.',
     puzzle: {
@@ -117,8 +117,8 @@ export const stages: Stage[] = [
   {
     id: 8,
     name: 'Basilica de Finibus Terrae',
-    lat: 39.7975,
-    lng: 18.3530,
+    lat: 39.7955,
+    lng: 18.3680,
     proximityRadius: 40,
     hint: "La chiesa dove finisce la terra. Costruita dove prima c'era un tempio pagano. Dicono che San Pietro sia passato proprio di qui.",
     puzzle: {
@@ -132,8 +132,8 @@ export const stages: Stage[] = [
   {
     id: 9,
     name: 'Sfida: Il Grido di Ferruccio',
-    lat: 39.7976,
-    lng: 18.3526,
+    lat: 39.7957,
+    lng: 18.3676,
     proximityRadius: 80,
     hint: 'Ferruccio dice: "Siete quasi alla fine! Ma prima... una prova di coraggio!" Restate vicino alla Basilica.',
     puzzle: {
@@ -148,8 +148,8 @@ export const stages: Stage[] = [
   {
     id: 10,
     name: 'Il Faro',
-    lat: 39.7978,
-    lng: 18.3522,
+    lat: 39.7959,
+    lng: 18.3684,
     proximityRadius: 50,
     hint: '47 metri di pietra bianca, 254 gradini a chiocciola, visibile a 50 km. Costruito dove prima c\'era una torre saracena.',
     puzzle: {
@@ -163,8 +163,8 @@ export const stages: Stage[] = [
   {
     id: 11,
     name: 'Punta Ristola',
-    lat: 39.7922,
-    lng: 18.3470,
+    lat: 39.7896,
+    lng: 18.3459,
     proximityRadius: 60,
     hint: "Il vero tacco d'Italia — più a sud del faro, più a sud di tutto. Da qui vedi le Tre Porte e senti il mare che entra nelle grotte.",
     puzzle: {
@@ -180,8 +180,8 @@ export const stages: Stage[] = [
   {
     id: 12,
     name: 'Grotta del Diavolo',
-    lat: 39.7918,
-    lng: 18.3462,
+    lat: 39.7901,
+    lng: 18.3458,
     proximityRadius: 70,
     hint: "L'ultima tappa è dove i diavoli facevano rimbombare le pareti. 40 metri di lunghezza, 17 di larghezza, dritta verso il mare. L'ingresso è sul dorso della roccia.",
     puzzle: {
