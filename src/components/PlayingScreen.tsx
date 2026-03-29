@@ -4,6 +4,7 @@ import { useGeolocation } from '../hooks/useGeolocation';
 import { useProximity } from '../hooks/useProximity';
 import { useLocationBroadcast } from '../hooks/useLocationBroadcast';
 import { stages } from '../data/stages';
+import { clearGameState } from '../utils/storage';
 import { MapView } from './MapView';
 import { Compass } from './Compass';
 import { StageCard } from './StageCard';
@@ -100,6 +101,19 @@ export function PlayingScreen() {
       )}
 
       <ProgressBar />
+
+      {/* Reset button */}
+      <button
+        onClick={() => {
+          if (confirm('Sei sicuro? Perderai tutti i progressi!')) {
+            clearGameState();
+            dispatch({ type: 'RESET_GAME' });
+          }
+        }}
+        className="fixed bottom-2 right-2 z-50 bg-brick/60 text-sand/60 text-[10px] rounded px-2 py-1"
+      >
+        Reset
+      </button>
     </div>
   );
 }
