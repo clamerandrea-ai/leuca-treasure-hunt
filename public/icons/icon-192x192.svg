@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192">
+  <rect width="192" height="192" rx="24" fill="#0A1628"/>
+  <circle cx="96" cy="96" r="60" fill="none" stroke="#C4A265" stroke-width="3"/>
+  <circle cx="96" cy="96" r="40" fill="none" stroke="#C4A265" stroke-width="1" opacity="0.3"/>
+  <polygon points="96,36 100,84 96,72 92,84" fill="#E8C875"/>
+  <polygon points="96,156 92,108 96,120 100,108" fill="#C4A265"/>
+  <line x1="36" y1="96" x2="156" y2="96" stroke="#C4A265" stroke-width="1" opacity="0.5"/>
+  <circle cx="96" cy="96" r="6" fill="#E8C875"/>
+  <text x="96" y="180" text-anchor="middle" fill="#C4A265" font-size="14" font-family="sans-serif">LEUCA</text>
+</svg>
