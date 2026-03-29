@@ -3,13 +3,13 @@ import { getDatabase, ref, set, onValue, serverTimestamp } from 'firebase/databa
 import type { TeamLocation } from './types/game';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+  apiKey: "AIzaSyAWk_8GWLQ-vsnv0LQ1Ndxk573GJ0GLsCM",
   authDomain: "leuca-treasure-hunt.firebaseapp.com",
   databaseURL: "https://leuca-treasure-hunt-default-rtdb.europe-west1.firebasedatabase.app",
   projectId: "leuca-treasure-hunt",
   storageBucket: "leuca-treasure-hunt.firebasestorage.app",
-  messagingSenderId: "000000000000",
-  appId: "1:000000000000:web:0000000000000000000000"
+  messagingSenderId: "229879991993",
+  appId: "1:229879991993:web:b854aa7a6f742c6bb05568"
 };
 
 let db: ReturnType<typeof getDatabase> | null = null;
