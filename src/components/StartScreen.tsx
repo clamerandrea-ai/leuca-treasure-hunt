@@ -10,9 +10,15 @@ export function StartScreen() {
   const tapCountRef = useRef(0);
   const tapTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
+  const MASTER_CODE = 'FERRUCCIO71';
+
   const handleStart = () => {
     const name = teamName.trim();
     if (!name) return;
+    if (name.toUpperCase() === MASTER_CODE) {
+      dispatch({ type: 'ENTER_MASTER' });
+      return;
+    }
     clearGameState();
     dispatch({ type: 'START_GAME', teamName: name });
   };

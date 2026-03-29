@@ -31,7 +31,7 @@ export interface Stage {
   points: number;
 }
 
-export type GameScreen = 'start' | 'playing' | 'victory';
+export type GameScreen = 'start' | 'playing' | 'victory' | 'master';
 
 export interface GameState {
   screen: GameScreen;
@@ -59,7 +59,16 @@ export type GameAction =
   | { type: 'TOGGLE_DEV_MODE' }
   | { type: 'DEV_SKIP_TO_STAGE'; stageId: number }
   | { type: 'RESET_GAME' }
-  | { type: 'RESTORE_STATE'; state: Partial<GameState> };
+  | { type: 'RESTORE_STATE'; state: Partial<GameState> }
+  | { type: 'ENTER_MASTER' };
+
+export interface TeamLocation {
+  teamName: string;
+  lat: number;
+  lng: number;
+  currentStage: number;
+  timestamp: number;
+}
 
 export interface LeaderboardEntry {
   teamName: string;

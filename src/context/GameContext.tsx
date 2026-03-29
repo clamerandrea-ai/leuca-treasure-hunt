@@ -109,6 +109,9 @@ function gameReducer(state: GameState, action: GameAction): GameState {
       };
     }
 
+    case 'ENTER_MASTER':
+      return { ...state, screen: 'master' };
+
     case 'RESET_GAME':
       return { ...initialState, devMode: state.devMode };
 

@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useGame } from '../context/GameContext';
 import { useGeolocation } from '../hooks/useGeolocation';
 import { useProximity } from '../hooks/useProximity';
+import { useLocationBroadcast } from '../hooks/useLocationBroadcast';
 import { stages } from '../data/stages';
 import { MapView } from './MapView';
 import { Compass } from './Compass';
@@ -14,6 +15,15 @@ export function PlayingScreen() {
   const { position, error: gpsError } = useGeolocation(state.screen === 'playing');
 
   const currentStage = stages.find(s => s.id === state.currentStage);
+
+  // Broadcast position to Firebase for master tracking
+  useLocationBroadcast(
+    state.teamName,
+    position?.lat ?? null,
+    position?.lng ?? null,
+    state.currentStage,
+    state.screen === 'playing'
+  );
 
   const { isNear, bearing, distanceText } = useProximity(
     position?.lat ?? null,
