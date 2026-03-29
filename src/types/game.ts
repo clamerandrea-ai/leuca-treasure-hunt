@@ -10,7 +10,13 @@ export interface PuzzleText {
   question: string;
 }
 
-export type Puzzle = PuzzleQuiz | PuzzleText;
+export interface PuzzleChallenge {
+  type: 'challenge';
+  question: string;
+  challengeDescription: string;
+}
+
+export type Puzzle = PuzzleQuiz | PuzzleText | PuzzleChallenge;
 
 export interface Stage {
   id: number;

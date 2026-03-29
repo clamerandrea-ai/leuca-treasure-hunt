@@ -18,7 +18,7 @@ export function StageCard({ stage, isNear }: StageCardProps) {
           Tappa {stage.id}: {stage.name}
         </h2>
         <span className="text-sand/40 text-xs">
-          {stage.id}/{9}
+          {stage.id}/{12}
         </span>
       </div>
 

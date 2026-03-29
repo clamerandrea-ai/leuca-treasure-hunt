@@ -1,5 +1,7 @@
 import type { Stage } from '../types/game';
 
+export const GAME_MASTER_PHONE = '393358442641';
+
 export const stages: Stage[] = [
   {
     id: 1,
@@ -20,6 +22,22 @@ export const stages: Stage[] = [
   },
   {
     id: 2,
+    name: 'Sfida: La Pizzica dei Contrabbandieri',
+    lat: 39.7938,
+    lng: 18.3553,
+    proximityRadius: 80,
+    hint: 'Ferruccio dice: "Prima di proseguire, dovete dimostrare che avete il sangue salentino nelle vene!" Restate nei pressi del porto.',
+    puzzle: {
+      type: 'challenge',
+      question: 'Inviate il video al Game Master per ricevere il codice segreto.',
+      challengeDescription: 'Trovate un gruppo di turisti o passanti e ballateci insieme la PIZZICA! Almeno 15 secondi di ballo. Filmate tutto e inviate il video.'
+    },
+    acceptedAnswers: ['pizzica1', 'PIZZICA1'],
+    storyFragment: '"Ah, sapete ballare! Mio nonno diceva: chi non sa ballare la pizzica non merita di trovare il tesoro. Avanti, continuate — il prossimo indizio vi aspetta dove passeggiavano i signori."',
+    points: 150
+  },
+  {
+    id: 3,
     name: 'Lungomare Colombo',
     lat: 39.7942,
     lng: 18.3558,
@@ -34,7 +52,7 @@ export const stages: Stage[] = [
     points: 100
   },
   {
-    id: 3,
+    id: 4,
     name: 'Le Ville',
     lat: 39.7950,
     lng: 18.3540,
@@ -49,7 +67,23 @@ export const stages: Stage[] = [
     points: 100
   },
   {
-    id: 4,
+    id: 5,
+    name: 'Sfida: Foto da Contrabbandiere',
+    lat: 39.7955,
+    lng: 18.3541,
+    proximityRadius: 80,
+    hint: 'Ferruccio dice: "Un buon contrabbandiere sa mimetizzarsi. Dimostratemi che sapete farlo!" Restate nella zona delle ville.',
+    puzzle: {
+      type: 'challenge',
+      question: 'Inviate la foto al Game Master per ricevere il codice segreto.',
+      challengeDescription: 'Fate una FOTO DI GRUPPO in posa da "contrabbandieri sospetti" davanti alla villa più bella che trovate. Espressioni serie, occhiali da sole, aria misteriosa!'
+    },
+    acceptedAnswers: ['foto1', 'FOTO1'],
+    storyFragment: '"Perfetti! Sembrate proprio una banda di contrabbandieri. Ma ricordatevi: i veri contrabbandieri non si facevano mai fotografare. Proseguite verso la cascata — là vi aspetta il prossimo segreto."',
+    points: 150
+  },
+  {
+    id: 6,
     name: 'Cascata Monumentale',
     lat: 39.7962,
     lng: 18.3542,
@@ -64,7 +98,7 @@ export const stages: Stage[] = [
     points: 100
   },
   {
-    id: 5,
+    id: 7,
     name: 'Colonna Mariana',
     lat: 39.7972,
     lng: 18.3535,
@@ -81,7 +115,7 @@ export const stages: Stage[] = [
     points: 100
   },
   {
-    id: 6,
+    id: 8,
     name: 'Basilica de Finibus Terrae',
     lat: 39.7975,
     lng: 18.3530,
@@ -96,7 +130,23 @@ export const stages: Stage[] = [
     points: 100
   },
   {
-    id: 7,
+    id: 9,
+    name: 'Sfida: Il Grido di Ferruccio',
+    lat: 39.7976,
+    lng: 18.3526,
+    proximityRadius: 80,
+    hint: 'Ferruccio dice: "Siete quasi alla fine! Ma prima... una prova di coraggio!" Restate vicino alla Basilica.',
+    puzzle: {
+      type: 'challenge',
+      question: 'Inviate il video al Game Master per ricevere il codice segreto.',
+      challengeDescription: 'Uno di voi deve recitare ad alta voce davanti a degli sconosciuti: "IO SONO UN CONTRABBANDIERE DI LEUCA E CERCO IL TESORO DI FERRUCCIO!" e fare un inchino. Filmate la reazione della gente!'
+    },
+    acceptedAnswers: ['grido1', 'GRIDO1'],
+    storyFragment: '"Ahahahah! Che coraggio! Nemmeno io avrei osato tanto! Sapete cosa diceva mio padre? Chi non ha vergogna, non ha paura. E chi non ha paura, trova il tesoro. Avanti, verso il faro!"',
+    points: 150
+  },
+  {
+    id: 10,
     name: 'Il Faro',
     lat: 39.7978,
     lng: 18.3522,
@@ -111,7 +161,7 @@ export const stages: Stage[] = [
     points: 100
   },
   {
-    id: 8,
+    id: 11,
     name: 'Punta Ristola',
     lat: 39.7922,
     lng: 18.3470,
@@ -128,7 +178,7 @@ export const stages: Stage[] = [
     points: 100
   },
   {
-    id: 9,
+    id: 12,
     name: 'Grotta del Diavolo',
     lat: 39.7918,
     lng: 18.3462,
