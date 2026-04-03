@@ -24,7 +24,7 @@ export const stages: Stage[] = [
     name: 'Porto Vecchio',
     lat: 39.7968,
     lng: 18.3616,
-    proximityRadius: 50,
+    proximityRadius: 80,
     hint: 'Tutto inizia dove le barche dei pescatori dormono la notte. Cerca il molo più antico, quello dove il tufo è mangiato dal sale.',
     puzzle: {
       type: 'text',
@@ -53,8 +53,8 @@ export const stages: Stage[] = [
   {
     id: 3,
     name: 'Lungomare Colombo',
-    lat: 39.7975,
-    lng: 18.3565,
+    lat: 39.7953,
+    lng: 18.3527,
     proximityRadius: 50,
     hint: "Cammina dove i signori dell'800 passeggiavano al tramonto. La strada è intitolata a chi scoprì un mondo nuovo.",
     puzzle: {
@@ -99,8 +99,8 @@ export const stages: Stage[] = [
   {
     id: 6,
     name: 'Cascata Monumentale',
-    lat: 39.7972,
-    lng: 18.3645,
+    lat: 39.7967,
+    lng: 18.3659,
     proximityRadius: 50,
     hint: "Dove l'acqua dolce della Puglia intera finisce il suo viaggio e si tuffa nel mare. Conta i gradini se hai fiato.",
     puzzle: {
@@ -116,7 +116,7 @@ export const stages: Stage[] = [
     name: 'Colonna Mariana',
     lat: 39.7962,
     lng: 18.3678,
-    proximityRadius: 40,
+    proximityRadius: 30,
     hint: 'Sali fino in cima, dove la Madonna guarda il mare da quasi 400 anni. Un grande piazzale con colonnato ti aspetta.',
     puzzle: {
       type: 'math',
@@ -129,8 +129,8 @@ export const stages: Stage[] = [
   {
     id: 8,
     name: 'Basilica de Finibus Terrae',
-    lat: 39.7955,
-    lng: 18.3680,
+    lat: 39.7967,
+    lng: 18.3689,
     proximityRadius: 40,
     hint: "La chiesa dove finisce la terra. Costruita dove prima c'era un tempio pagano. Dicono che San Pietro sia passato proprio di qui.",
     puzzle: {
@@ -162,7 +162,7 @@ export const stages: Stage[] = [
     name: 'Il Faro',
     lat: 39.7959,
     lng: 18.3684,
-    proximityRadius: 50,
+    proximityRadius: 40,
     hint: '47 metri di pietra bianca, 254 gradini a chiocciola, visibile a 50 km. Costruito dove prima c\'era una torre saracena.',
     puzzle: {
       type: 'math',
