@@ -11,13 +11,11 @@ export const stages: Stage[] = [
     proximityRadius: 50,
     hint: 'Tutto inizia dove le barche dei pescatori dormono la notte. Cerca il molo più antico, quello dove il tufo è mangiato dal sale.',
     puzzle: {
-      type: 'quiz',
-      question: 'Ferruccio nascondeva le stecche nelle barche. Ma quanti mari puoi vedere da questo porto?',
-      options: ['Uno', 'Due', 'Tre', 'Nessuno'],
-      correctIndex: 1
+      type: 'text',
+      question: 'Ferruccio nascondeva le stecche nelle barche. I due mari che si incontrano qui hanno nomi diversi. Scrivi i nomi di ENTRAMBI separati da una virgola.'
     },
-    acceptedAnswers: ['due', '2'],
-    storyFragment: '"Il porto era casa mia. Conoscevo ogni barca, ogni nodo, ogni corrente. Qui ho nascosto il primo pezzo della mappa, sotto la terza bitta di ormeggio contando da levante. Chi vuole trovarla dovrà guardare dove il sole non arriva mai."',
+    acceptedAnswers: ['adriatico, ionio', 'ionio, adriatico', 'mar adriatico, mar ionio', 'mar ionio, mar adriatico', 'adriatico,ionio', 'ionio,adriatico'],
+    storyFragment: '"Il porto era casa mia. Conoscevo ogni barca, ogni nodo, ogni corrente. Il mare è \'amaru\' ma ti dà da vivere. Qui ho nascosto il primo pezzo della mappa, sotto la terza bitta di ormeggio contando da levante. Chi vuole trovarla dovrà guardare dove il sole non arriva mai."',
     points: 100
   },
   {
@@ -33,7 +31,7 @@ export const stages: Stage[] = [
       challengeDescription: 'Trovate un gruppo di turisti o passanti e ballateci insieme la PIZZICA! Almeno 15 secondi di ballo. Filmate tutto e inviate il video.'
     },
     acceptedAnswers: ['pizzica1', 'PIZZICA1'],
-    storyFragment: '"Ah, sapete ballare! Mio nonno diceva: chi non sa ballare la pizzica non merita di trovare il tesoro. Avanti, continuate — il prossimo indizio vi aspetta dove passeggiavano i signori."',
+    storyFragment: '"Ah, sapete ballare! Mio nonno diceva: chi non sa ballare la pizzica non merita di trovare il tesoro. Ballavamo come \'diàuli\' nelle notti di luna piena. Avanti, continuate — il prossimo indizio vi aspetta dove passeggiavano i signori."',
     points: 150
   },
   {
@@ -44,11 +42,11 @@ export const stages: Stage[] = [
     proximityRadius: 50,
     hint: "Cammina dove i signori dell'800 passeggiavano al tramonto. La strada è intitolata a chi scoprì un mondo nuovo.",
     puzzle: {
-      type: 'text',
-      question: 'Le ville liberty sul lungomare hanno balaustre e ringhiere particolari. Durante quale guerra furono smontate per farne armi?'
+      type: 'math',
+      question: 'Cristoforo Colombo scoprì l\'America nel 1492. La Basilica de Finibus Terrae fu completata nel 1720. Quanti anni sono passati tra i due eventi?'
     },
-    acceptedAnswers: ['seconda guerra mondiale', 'seconda', 'wwii', 'ww2', '2 guerra mondiale', 'II guerra mondiale'],
-    storyFragment: '"Le ville dei signori... ci passavo davanti ogni notte con il carico sulle spalle. Loro dormivano, io lavoravo. Ho nascosto tre monete d\'oro nella fontanella accanto alla villa con i leoni di pietra. Nessuno guarda mai sotto l\'acqua."',
+    acceptedAnswers: ['228'],
+    storyFragment: '"Le ville dei signori... ci passavo davanti ogni notte con il carico sulle spalle. Che \'dulure\' di schiena, ma ne valeva la pena. Loro dormivano, io lavoravo. Ho nascosto tre monete d\'oro nella fontanella accanto alla villa con i leoni di pietra. Nessuno guarda mai sotto l\'acqua."',
     points: 100
   },
   {
@@ -63,7 +61,7 @@ export const stages: Stage[] = [
       question: 'Riordina queste lettere per trovare lo stile architettonico di queste ville: BYTREYL'
     },
     acceptedAnswers: ['liberty'],
-    storyFragment: '"Il padrone di Villa Meridiana mi pagava per portargli il tabacco turco — il migliore. Diceva che era per gli ospiti importanti. In realtà lo fumava da solo, di notte, sul terrazzo. Sotto quel terrazzo ho lasciato il secondo pezzo della mappa."',
+    storyFragment: '"Il padrone di Villa Meridiana mi pagava per portargli il tabacco turco — il migliore. Diceva che era per gli ospiti importanti. In realtà lo fumava da solo, di notte, sul terrazzo. \'Ogghje\' nessuno fuma più così bene. Sotto quel terrazzo ho lasciato il secondo pezzo della mappa."',
     points: 100
   },
   {
@@ -79,7 +77,7 @@ export const stages: Stage[] = [
       challengeDescription: 'Fate una FOTO DI GRUPPO in posa da "contrabbandieri sospetti" davanti alla villa più bella che trovate. Espressioni serie, occhiali da sole, aria misteriosa!'
     },
     acceptedAnswers: ['foto1', 'FOTO1'],
-    storyFragment: '"Perfetti! Sembrate proprio una banda di contrabbandieri. Ma ricordatevi: i veri contrabbandieri non si facevano mai fotografare. Proseguite verso la cascata — là vi aspetta il prossimo segreto."',
+    storyFragment: '"Perfetti! Sembrate proprio una banda di contrabbandieri. Ma ricordatevi: i veri contrabbandieri non si facevano mai fotografare. Solo la \'luna\' ci vedeva in faccia. Proseguite verso la cascata — là vi aspetta il prossimo segreto."',
     points: 150
   },
   {
@@ -91,10 +89,10 @@ export const stages: Stage[] = [
     hint: "Dove l'acqua dolce della Puglia intera finisce il suo viaggio e si tuffa nel mare. Conta i gradini se hai fiato.",
     puzzle: {
       type: 'math',
-      question: 'La scalinata ha circa 296 gradini. Se Ferruccio saliva 4 gradini ogni secondo, quanti secondi impiegava a salire tutta la scalinata?'
+      question: 'La scalinata ha 296 gradini. Ferruccio saliva 4 gradini al secondo, ma ogni 50 gradini si fermava 10 secondi per controllare che nessuno lo seguisse. Quanti secondi impiegava in totale?'
     },
-    acceptedAnswers: ['74'],
-    storyFragment: '"L\'acquedotto arrivò nel \'39. Prima di quello, noi contrabbandieri usavamo le cisterne sotto la scalinata come deposito. Nessuno controllava mai là — troppa fatica salire e scendere. Il terzo pezzo è nella vasca, dietro la colonna."',
+    acceptedAnswers: ['124'],
+    storyFragment: '"L\'acquedotto arrivò nel \'39. Prima di quello, noi contrabbandieri usavamo le cisterne sotto la scalinata come deposito. Tutto era \'oscuru\' là sotto, nemmeno i topi ci vedevano. Nessuno controllava mai — troppa fatica salire e scendere. Il terzo pezzo è nella vasca, dietro la colonna."',
     points: 100
   },
   {
@@ -105,13 +103,11 @@ export const stages: Stage[] = [
     proximityRadius: 40,
     hint: 'Sali fino in cima, dove la Madonna guarda il mare da quasi 400 anni. Un grande piazzale con colonnato ti aspetta.',
     puzzle: {
-      type: 'quiz',
-      question: 'La colonna con la statua della Madonna fu voluta nel 1694 da un Duca. Di quale casata?',
-      options: ["D'Aragona", "De' Medici", 'Borbone', 'Sforza'],
-      correctIndex: 0
+      type: 'math',
+      question: 'La colonna è alta circa 18 metri. Se la sua ombra a mezzogiorno del 21 giugno misura 7 metri, quanti metri più alta è la colonna rispetto alla sua ombra?'
     },
-    acceptedAnswers: ["d'aragona", 'aragona', 'daragona'],
-    storyFragment: '"Dalla piazza vedevo tutto: il porto, le barche della Finanza, le luci dei miei compagni sulla costa. Bastava un segnale con la lanterna e sapevamo se la via era libera. Il quinto pezzo l\'ho messo dove la Madonna non guarda — dietro la base della colonna, lato nord."',
+    acceptedAnswers: ['11'],
+    storyFragment: '"Dalla piazza vedevo tutto: il porto, le barche della Finanza, le luci dei miei compagni sulla costa. Conoscevo ogni \'ruga\' del paese come le mie tasche. Bastava un segnale con la lanterna e sapevamo se la via era libera. Il quinto pezzo l\'ho messo dove la Madonna non guarda — dietro la base della colonna, lato nord."',
     points: 100
   },
   {
@@ -126,7 +122,7 @@ export const stages: Stage[] = [
       question: "Il nome latino 'De Finibus Terrae' significa qualcosa di preciso. Traducilo in italiano (3 parole)."
     },
     acceptedAnswers: ['ai confini della terra', 'alla fine della terra', 'confini della terra', 'fine della terra'],
-    storyFragment: '"Mia madre mi portava qui da bambino, ogni domenica. Pregava che smettessi con il contrabbando. Non ho mai smesso, ma non ho mai smesso nemmeno di entrare in chiesa prima di ogni viaggio. Sotto la panca in fondo a sinistra, c\'è il sesto pezzo."',
+    storyFragment: '"Mia madre mi portava qui da bambino, ogni domenica. Pregava per la mia \'anima\'. Non ho mai smesso col contrabbando, ma non ho mai smesso nemmeno di entrare in chiesa prima di ogni viaggio. Sotto la panca in fondo a sinistra, c\'è il sesto pezzo."',
     points: 100
   },
   {
@@ -142,7 +138,7 @@ export const stages: Stage[] = [
       challengeDescription: 'Uno di voi deve recitare ad alta voce davanti a degli sconosciuti: "IO SONO UN CONTRABBANDIERE DI LEUCA E CERCO IL TESORO DI FERRUCCIO!" e fare un inchino. Filmate la reazione della gente!'
     },
     acceptedAnswers: ['grido1', 'GRIDO1'],
-    storyFragment: '"Ahahahah! Che coraggio! Nemmeno io avrei osato tanto! Sapete cosa diceva mio padre? Chi non ha vergogna, non ha paura. E chi non ha paura, trova il tesoro. Avanti, verso il faro!"',
+    storyFragment: '"Ahahahah! Che coraggio! Nemmeno io avrei osato tanto! Il \'tiempu\' vola quando si ha coraggio. Sapete cosa diceva mio padre? Chi non ha vergogna, non ha paura. E chi non ha paura, trova il tesoro. Avanti, verso il faro!"',
     points: 150
   },
   {
@@ -157,7 +153,7 @@ export const stages: Stage[] = [
       question: 'Il faro è alto 47 metri dal suolo ma si trova a 102 metri sul livello del mare. A che altitudine si trova la base del faro?'
     },
     acceptedAnswers: ['55', '55 metri', '55m'],
-    storyFragment: '"Il faro era il mio nemico e il mio amico. Di notte, quando la luce rossa girava verso Ugento, avevo esattamente 30 secondi di buio per passare con la barca sotto le rocce. Il settimo pezzo è dove la luce rossa non arriva mai — il punto cieco del guardiano."',
+    storyFragment: '"Il faro era il mio nemico e il mio amico. Di notte, quando la luce rossa girava verso Ugento, avevo esattamente 30 secondi di buio per passare con la barca sotto le rocce. Mai dire \'addiu\' al mare — lui torna sempre. Il settimo pezzo è dove la luce rossa non arriva mai — il punto cieco del guardiano."',
     points: 100
   },
   {
@@ -186,9 +182,9 @@ export const stages: Stage[] = [
     hint: "L'ultima tappa è dove i diavoli facevano rimbombare le pareti. 40 metri di lunghezza, 17 di larghezza, dritta verso il mare. L'ingresso è sul dorso della roccia.",
     puzzle: {
       type: 'text',
-      question: "Nel 1871, Ulderico Botti trovò qui reperti del Neolitico. Ora assembla i 9 frammenti del diario: qual è l'ultima parola che Ferruccio scrisse nel taccuino? (Indizio: è il nome di sua madre)"
+      question: "L'ultimo enigma di Ferruccio. In ognuno dei primi 10 frammenti del diario, Ferruccio ha nascosto una parola tra apici ('parola'). Prendi la prima lettera di ciascuna, nell'ordine delle tappe: scoprirai il nome della persona più importante della sua vita."
     },
-    acceptedAnswers: ['addolorata', 'maria', 'concetta'],
+    acceptedAnswers: ['addolorata'],
     storyFragment: '"Qui finisce la corsa. Il carico vero non erano le sigarette — erano le monete d\'oro che mio nonno aveva portato da Corfù nel 1920. Le ho nascoste qui, nella grotta che tutti temevano. Nessuno ha mai avuto il coraggio di cercarle. Fino a oggi. Bravi, \'picciriddhi\'. Il tesoro è vostro."\n\n— Ferruccio \'il Greco\' Cataldo, 14 marzo 1971',
     points: 200
   }
