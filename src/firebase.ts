@@ -26,7 +26,7 @@ export function isFirebaseConfigured(): boolean {
   return !firebaseConfig.apiKey.includes('XXXX');
 }
 
-export function broadcastLocation(teamName: string, lat: number, lng: number, currentStage: number) {
+export function broadcastLocation(teamName: string, lat: number, lng: number, currentStage: number, currentStep: number = 1, route: string = 'A') {
   if (!isFirebaseConfigured()) return;
   try {
     const db = getDb();
@@ -36,6 +36,8 @@ export function broadcastLocation(teamName: string, lat: number, lng: number, cu
       lat,
       lng,
       currentStage,
+      currentStep,
+      route,
       timestamp: serverTimestamp()
     });
   } catch (e) {

@@ -1,6 +1,6 @@
 import type { Stage } from '../types/game';
 import { useGame } from '../context/GameContext';
-import { stages } from '../data/stages';
+import { getRouteOrder } from '../data/stages';
 
 interface StoryRevealProps {
   stage: Stage;
@@ -8,7 +8,7 @@ interface StoryRevealProps {
 
 export function StoryReveal({ stage }: StoryRevealProps) {
   const { state, dispatch } = useGame();
-  const isLastStage = state.currentStage >= stages.length;
+  const isLastStage = state.currentStep >= getRouteOrder(state.route).length;
 
   return (
     <div className="story-enter space-y-4">

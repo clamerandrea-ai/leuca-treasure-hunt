@@ -2,11 +2,13 @@ import { useState, useRef } from 'react';
 import { useGame } from '../context/GameContext';
 import { Leaderboard } from './Leaderboard';
 import { clearGameState } from '../utils/storage';
+import type { GameRoute } from '../types/game';
 
 export function StartScreen() {
   const { dispatch } = useGame();
   const [teamName, setTeamName] = useState('');
   const [showLeaderboard, setShowLeaderboard] = useState(false);
+  const [showRouteSelect, setShowRouteSelect] = useState(false);
   const tapCountRef = useRef(0);
   const tapTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -19,8 +21,12 @@ export function StartScreen() {
       dispatch({ type: 'ENTER_MASTER' });
       return;
     }
+    setShowRouteSelect(true);
+  };
+
+  const handleRouteSelect = (route: GameRoute) => {
     clearGameState();
-    dispatch({ type: 'START_GAME', teamName: name });
+    dispatch({ type: 'START_GAME', teamName: teamName.trim(), route });
   };
 
   const handleTitleTap = () => {
@@ -48,60 +54,108 @@ export function StartScreen() {
           <h2 className="text-gold text-lg">di Leuca</h2>
         </div>
 
-        {/* Story premise */}
-        <div className="parchment-card p-4 text-sm leading-relaxed space-y-3">
-          <p className="text-sand/80">
-            <strong className="text-gold-bright">Anno 1971. Santa Maria di Leuca.</strong>
-          </p>
-          <p className="text-sand/70">
-            Ferruccio "il Greco" Cataldo, il piu astuto contrabbandiere del Capo di Leuca,
-            fiuto l'arrivo della Guardia di Finanza prima di chiunque altro. In una sola notte,
-            nascose il suo ultimo carico — stecche di sigarette, monete d'oro ottomane e una
-            mappa dei passaggi segreti nelle grotte — in 9 punti diversi lungo il paese.
-          </p>
-          <p className="text-sand/70">
-            Poi spari. Nessuno lo rivide mai.
-          </p>
-          <p className="text-sand/70">
-            55 anni dopo, un muratore trova un taccuino sigillato in una fessura del molo.
-            Dentro: 9 indizi cifrati. E la mappa di Ferruccio.
-          </p>
-          <p className="text-gold-bright font-semibold">
-            Siete voi i primi a leggerla.
-          </p>
-        </div>
+        {!showRouteSelect ? (
+          <>
+            {/* Story premise */}
+            <div className="parchment-card p-4 text-sm leading-relaxed space-y-3">
+              <p className="text-sand/80">
+                <strong className="text-gold-bright">Anno 1971. Santa Maria di Leuca.</strong>
+              </p>
+              <p className="text-sand/70">
+                Ferruccio "il Greco" Cataldo, il piu astuto contrabbandiere del Capo di Leuca,
+                fiuto l'arrivo della Guardia di Finanza prima di chiunque altro. In una sola notte,
+                nascose il suo ultimo carico — stecche di sigarette, monete d'oro ottomane e una
+                mappa dei passaggi segreti nelle grotte — in 9 punti diversi lungo il paese.
+              </p>
+              <p className="text-sand/70">
+                Poi spari. Nessuno lo rivide mai.
+              </p>
+              <p className="text-sand/70">
+                55 anni dopo, un muratore trova un taccuino sigillato in una fessura del molo.
+                Dentro: 9 indizi cifrati. E la mappa di Ferruccio.
+              </p>
+              <p className="text-gold-bright font-semibold">
+                Siete voi i primi a leggerla.
+              </p>
+            </div>
 
-        {/* Team name input */}
-        <div className="space-y-3">
-          <input
-            type="text"
-            value={teamName}
-            onChange={(e) => setTeamName(e.target.value)}
-            onKeyDown={(e) => e.key === 'Enter' && handleStart()}
-            placeholder="Nome della squadra..."
-            maxLength={30}
-            className="w-full bg-sea-medium/80 border border-gold/30 rounded-lg px-4 py-3 text-sand placeholder-sand/30 text-center outline-none focus:border-gold/60 transition-colors"
-          />
-          <button
-            onClick={handleStart}
-            disabled={!teamName.trim()}
-            className="w-full bg-gold text-sea-dark font-bold rounded-lg py-3 text-base disabled:opacity-30 disabled:cursor-not-allowed active:bg-gold-bright transition-colors duration-200"
-          >
-            Inizia la caccia
-          </button>
-        </div>
+            {/* Team name input */}
+            <div className="space-y-3">
+              <input
+                type="text"
+                value={teamName}
+                onChange={(e) => setTeamName(e.target.value)}
+                onKeyDown={(e) => e.key === 'Enter' && handleStart()}
+                placeholder="Nome della squadra..."
+                maxLength={30}
+                className="w-full bg-sea-medium/80 border border-gold/30 rounded-lg px-4 py-3 text-sand placeholder-sand/30 text-center outline-none focus:border-gold/60 transition-colors"
+              />
+              <button
+                onClick={handleStart}
+                disabled={!teamName.trim()}
+                className="w-full bg-gold text-sea-dark font-bold rounded-lg py-3 text-base disabled:opacity-30 disabled:cursor-not-allowed active:bg-gold-bright transition-colors duration-200"
+              >
+                Inizia la caccia
+              </button>
+            </div>
 
-        {/* Leaderboard toggle */}
-        <button
-          onClick={() => setShowLeaderboard(!showLeaderboard)}
-          className="w-full text-gold/60 text-sm underline"
-        >
-          {showLeaderboard ? 'Nascondi classifica' : 'Vedi classifica'}
-        </button>
+            {/* Leaderboard toggle */}
+            <button
+              onClick={() => setShowLeaderboard(!showLeaderboard)}
+              className="w-full text-gold/60 text-sm underline"
+            >
+              {showLeaderboard ? 'Nascondi classifica' : 'Vedi classifica'}
+            </button>
 
-        {showLeaderboard && (
-          <div className="parchment-card p-4">
-            <Leaderboard />
+            {showLeaderboard && (
+              <div className="parchment-card p-4">
+                <Leaderboard />
+              </div>
+            )}
+          </>
+        ) : (
+          /* Route selection */
+          <div className="space-y-4">
+            <p className="text-sand/70 text-sm text-center">
+              Squadra <strong className="text-gold-bright">{teamName.trim()}</strong>, scegliete il vostro percorso:
+            </p>
+
+            <button
+              onClick={() => handleRouteSelect('A')}
+              className="w-full parchment-card p-4 text-left active:scale-[0.98] transition-transform"
+            >
+              <div className="flex items-center gap-3">
+                <span className="text-3xl">&#9875;</span>
+                <div>
+                  <p className="text-gold-bright font-bold text-base">Percorso del Porto</p>
+                  <p className="text-sand/50 text-xs">
+                    Si parte dal Porto Vecchio, verso il lungomare e le ville, poi su fino al Faro
+                  </p>
+                </div>
+              </div>
+            </button>
+
+            <button
+              onClick={() => handleRouteSelect('B')}
+              className="w-full parchment-card p-4 text-left active:scale-[0.98] transition-transform"
+            >
+              <div className="flex items-center gap-3">
+                <span className="text-3xl">&#127981;</span>
+                <div>
+                  <p className="text-gold-bright font-bold text-base">Percorso del Faro</p>
+                  <p className="text-sand/50 text-xs">
+                    Si parte dalla Colonna Mariana e il Faro, poi giu verso il Porto e le ville
+                  </p>
+                </div>
+              </div>
+            </button>
+
+            <button
+              onClick={() => setShowRouteSelect(false)}
+              className="w-full text-sand/40 text-sm"
+            >
+              &larr; Torna indietro
+            </button>
           </div>
         )}
       </div>

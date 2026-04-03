@@ -2,6 +2,22 @@ import type { Stage } from '../types/game';
 
 export const GAME_MASTER_PHONE = '393358442641';
 
+// Route A: parte dal Porto, va a ovest (Lungomare/Ville), poi est (Cascata/Basilica/Faro), poi sud
+export const ROUTE_A = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+
+// Route B: parte dalla collina (Colonna/Basilica/Faro), poi Cascata/Porto, poi ovest (Lungomare/Ville), poi sud
+export const ROUTE_B = [7, 8, 9, 10, 6, 1, 2, 3, 4, 5, 11, 12];
+
+export function getRouteOrder(route: 'A' | 'B'): number[] {
+  return route === 'A' ? ROUTE_A : ROUTE_B;
+}
+
+export function getStageForStep(step: number, route: 'A' | 'B'): Stage | undefined {
+  const order = getRouteOrder(route);
+  const stageId = order[step - 1];
+  return stages.find(s => s.id === stageId);
+}
+
 export const stages: Stage[] = [
   {
     id: 1,

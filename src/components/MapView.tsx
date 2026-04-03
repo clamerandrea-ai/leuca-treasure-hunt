@@ -2,7 +2,7 @@ import { MapContainer, TileLayer, Marker, Popup, Circle, useMap } from 'react-le
 import L from 'leaflet';
 import { useEffect } from 'react';
 import { useGame } from '../context/GameContext';
-import { stages } from '../data/stages';
+import { stages, getStageForStep, getRouteOrder } from '../data/stages';
 
 // Fix default marker icons for Leaflet + bundler
 import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png';
@@ -70,7 +70,8 @@ interface MapViewProps {
 
 export function MapView({ userPosition }: MapViewProps) {
   const { state } = useGame();
-  const currentStage = stages.find(s => s.id === state.currentStage);
+  const currentStage = getStageForStep(state.currentStep, state.route);
+  const routeOrder = getRouteOrder(state.route);
 
   const center: [number, number] = currentStage
     ? [currentStage.lat, currentStage.lng]
@@ -120,15 +121,19 @@ export function MapView({ userPosition }: MapViewProps) {
           </>
         )}
 
-        {/* Dev mode: show all stages */}
+        {/* Dev mode: show all route stages */}
         {state.devMode &&
-          stages
-            .filter(s => !state.completedStages.includes(s.id) && s.id !== state.currentStage)
-            .map(s => (
-              <Marker key={s.id} position={[s.lat, s.lng]} icon={goldIcon} opacity={0.3}>
-                <Popup>{s.name} (nascosta)</Popup>
-              </Marker>
-            ))}
+          routeOrder
+            .filter(id => !state.completedStages.includes(id) && id !== currentStage?.id)
+            .map(id => {
+              const s = stages.find(st => st.id === id);
+              if (!s) return null;
+              return (
+                <Marker key={s.id} position={[s.lat, s.lng]} icon={goldIcon} opacity={0.3}>
+                  <Popup>{s.name} (nascosta)</Popup>
+                </Marker>
+              );
+            })}
 
         {/* User position */}
         {userPosition && (

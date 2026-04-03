@@ -5,20 +5,22 @@ import { StoryReveal } from './StoryReveal';
 
 interface StageCardProps {
   stage: Stage;
+  stepNumber: number;
+  totalSteps: number;
   isNear: boolean;
 }
 
-export function StageCard({ stage, isNear }: StageCardProps) {
+export function StageCard({ stage, stepNumber, totalSteps, isNear }: StageCardProps) {
   const { state, dispatch } = useGame();
 
   return (
     <div className="parchment-card p-4 mx-4 max-h-[60vh] overflow-y-auto screen-transition">
       <div className="flex items-center justify-between mb-3">
         <h2 className="text-gold-bright font-bold text-lg">
-          Tappa {stage.id}: {stage.name}
+          Tappa {stepNumber}: {stage.name}
         </h2>
         <span className="text-sand/40 text-xs">
-          {stage.id}/{12}
+          {stepNumber}/{totalSteps}
         </span>
       </div>
 

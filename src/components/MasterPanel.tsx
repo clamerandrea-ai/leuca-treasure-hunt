@@ -164,7 +164,7 @@ export function MasterPanel() {
                   >
                     <Popup>
                       <strong>{team.teamName}</strong><br />
-                      Tappa: {team.currentStage}/{stages.length}<br />
+                      Step: {team.currentStep || team.currentStage}/{stages.length} &middot; Percorso {team.route || 'A'}<br />
                       {team.timestamp && `Ultimo aggiornamento: ${new Date(team.timestamp).toLocaleTimeString('it-IT')}`}
                     </Popup>
                   </Marker>
@@ -194,7 +194,7 @@ export function MasterPanel() {
                     <div className="flex-1">
                       <p className="text-sand font-semibold text-sm">{team.teamName}</p>
                       <p className="text-sand/50 text-xs">
-                        Tappa {team.currentStage}/{stages.length} &middot; {stages.find(s => s.id === team.currentStage)?.name}
+                        Step {team.currentStep || team.currentStage}/{stages.length} &middot; Percorso {team.route || 'A'} &middot; {stages.find(s => s.id === team.currentStage)?.name}
                       </p>
                     </div>
                     {team.timestamp && (

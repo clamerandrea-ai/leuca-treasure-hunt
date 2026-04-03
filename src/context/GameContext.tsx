@@ -1,12 +1,13 @@
 import { createContext, useContext, useReducer, useEffect, type ReactNode } from 'react';
 import type { GameState, GameAction } from '../types/game';
 import { saveGameState, loadGameState } from '../utils/storage';
-import { stages } from '../data/stages';
+import { getRouteOrder } from '../data/stages';
 
 const initialState: GameState = {
   screen: 'start',
   teamName: '',
-  currentStage: 1,
+  route: 'A',
+  currentStep: 1,
   completedStages: [],
   score: 0,
   startTime: null,
@@ -25,6 +26,7 @@ function gameReducer(state: GameState, action: GameAction): GameState {
         ...initialState,
         screen: 'playing',
         teamName: action.teamName,
+        route: action.route,
         startTime: Date.now(),
         devMode: state.devMode,
       };
@@ -62,9 +64,12 @@ function gameReducer(state: GameState, action: GameAction): GameState {
       return { ...state, showStory: true };
 
     case 'NEXT_STAGE': {
-      const nextId = state.currentStage + 1;
-      const newCompleted = [...state.completedStages, state.currentStage];
-      if (nextId > stages.length) {
+      const routeOrder = getRouteOrder(state.route);
+      const currentStageId = routeOrder[state.currentStep - 1];
+      const newCompleted = [...state.completedStages, currentStageId];
+      const nextStep = state.currentStep + 1;
+
+      if (nextStep > routeOrder.length) {
         return {
           ...state,
           screen: 'victory',
@@ -77,7 +82,7 @@ function gameReducer(state: GameState, action: GameAction): GameState {
       }
       return {
         ...state,
-        currentStage: nextId,
+        currentStep: nextStep,
         completedStages: newCompleted,
         showStory: false,
         showPuzzle: false,
@@ -96,11 +101,12 @@ function gameReducer(state: GameState, action: GameAction): GameState {
     case 'TOGGLE_DEV_MODE':
       return { ...state, devMode: !state.devMode };
 
-    case 'DEV_SKIP_TO_STAGE': {
-      const completed = Array.from({ length: action.stageId - 1 }, (_, i) => i + 1);
+    case 'DEV_SKIP_TO_STEP': {
+      const routeOrder = getRouteOrder(state.route);
+      const completed = routeOrder.slice(0, action.step - 1);
       return {
         ...state,
-        currentStage: action.stageId,
+        currentStep: action.step,
         completedStages: completed,
         showPuzzle: false,
         showStory: false,

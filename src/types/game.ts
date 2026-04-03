@@ -33,11 +33,14 @@ export interface Stage {
 
 export type GameScreen = 'start' | 'playing' | 'victory' | 'master';
 
+export type GameRoute = 'A' | 'B';
+
 export interface GameState {
   screen: GameScreen;
   teamName: string;
-  currentStage: number;
-  completedStages: number[];
+  route: GameRoute;
+  currentStep: number;        // step within the route (1-based)
+  completedStages: number[];  // stage IDs completed
   score: number;
   startTime: number | null;
   endTime: number | null;
@@ -49,7 +52,7 @@ export interface GameState {
 }
 
 export type GameAction =
-  | { type: 'START_GAME'; teamName: string }
+  | { type: 'START_GAME'; teamName: string; route: GameRoute }
   | { type: 'SET_NEAR_STAGE'; isNear: boolean }
   | { type: 'UNLOCK_PUZZLE' }
   | { type: 'SOLVE_PUZZLE'; points: number }
@@ -57,7 +60,7 @@ export type GameAction =
   | { type: 'NEXT_STAGE' }
   | { type: 'FINISH_GAME' }
   | { type: 'TOGGLE_DEV_MODE' }
-  | { type: 'DEV_SKIP_TO_STAGE'; stageId: number }
+  | { type: 'DEV_SKIP_TO_STEP'; step: number }
   | { type: 'RESET_GAME' }
   | { type: 'RESTORE_STATE'; state: Partial<GameState> }
   | { type: 'ENTER_MASTER' };
@@ -67,6 +70,8 @@ export interface TeamLocation {
   lat: number;
   lng: number;
   currentStage: number;
+  currentStep: number;
+  route: GameRoute;
   timestamp: number;
 }
 

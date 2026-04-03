@@ -3,26 +3,30 @@ import { useGame } from '../context/GameContext';
 import { useGeolocation } from '../hooks/useGeolocation';
 import { useProximity } from '../hooks/useProximity';
 import { useLocationBroadcast } from '../hooks/useLocationBroadcast';
-import { stages } from '../data/stages';
+import { getStageForStep, getRouteOrder } from '../data/stages';
 import { clearGameState } from '../utils/storage';
 import { MapView } from './MapView';
 import { Compass } from './Compass';
 import { StageCard } from './StageCard';
 import { Timer } from './Timer';
 import { ProgressBar } from './ProgressBar';
+import { RivalTracker } from './RivalTracker';
 
 export function PlayingScreen() {
   const { state, dispatch } = useGame();
   const { position, error: gpsError } = useGeolocation(state.screen === 'playing');
 
-  const currentStage = stages.find(s => s.id === state.currentStage);
+  const currentStage = getStageForStep(state.currentStep, state.route);
+  const routeOrder = getRouteOrder(state.route);
 
   // Broadcast position to Firebase for master tracking
   useLocationBroadcast(
     state.teamName,
     position?.lat ?? null,
     position?.lng ?? null,
-    state.currentStage,
+    currentStage?.id ?? 1,
+    state.currentStep,
+    state.route,
     state.screen === 'playing'
   );
 
@@ -51,6 +55,7 @@ export function PlayingScreen() {
   return (
     <div className="parchment h-full flex flex-col overflow-hidden">
       <Timer />
+      <RivalTracker />
 
       {/* GPS error */}
       {gpsError && (
@@ -73,29 +78,38 @@ export function PlayingScreen() {
 
       {/* Stage card */}
       <div className="flex-1 overflow-y-auto pb-16">
-        <StageCard stage={currentStage} isNear={state.isNearStage || state.devMode} />
+        <StageCard
+          stage={currentStage}
+          stepNumber={state.currentStep}
+          totalSteps={routeOrder.length}
+          isNear={state.isNearStage || state.devMode}
+        />
       </div>
 
       {/* Dev mode panel */}
       {state.devMode && (
         <div className="fixed top-12 left-3 z-50 bg-brick/80 backdrop-blur-sm rounded-lg p-2 space-y-1">
-          <p className="text-sand text-[10px] font-bold">[DEV MODE]</p>
+          <p className="text-sand text-[10px] font-bold">[DEV] Percorso {state.route}</p>
           <div className="flex flex-wrap gap-1">
-            {stages.map(s => (
-              <button
-                key={s.id}
-                onClick={() => dispatch({ type: 'DEV_SKIP_TO_STAGE', stageId: s.id })}
-                className={`w-6 h-6 rounded text-[10px] font-bold ${
-                  s.id === state.currentStage
-                    ? 'bg-gold text-sea-dark'
-                    : state.completedStages.includes(s.id)
-                    ? 'bg-green-600 text-white'
-                    : 'bg-sea-medium text-sand/50'
-                }`}
-              >
-                {s.id}
-              </button>
-            ))}
+            {routeOrder.map((stageId, idx) => {
+              const step = idx + 1;
+              return (
+                <button
+                  key={step}
+                  onClick={() => dispatch({ type: 'DEV_SKIP_TO_STEP', step })}
+                  className={`w-6 h-6 rounded text-[10px] font-bold ${
+                    step === state.currentStep
+                      ? 'bg-gold text-sea-dark'
+                      : state.completedStages.includes(stageId)
+                      ? 'bg-green-600 text-white'
+                      : 'bg-sea-medium text-sand/50'
+                  }`}
+                  title={`Step ${step} → Stage ${stageId}`}
+                >
+                  {step}
+                </button>
+              );
+            })}
           </div>
         </div>
       )}
