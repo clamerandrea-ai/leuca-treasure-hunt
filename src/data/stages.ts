@@ -2,11 +2,11 @@ import type { Stage } from '../types/game';
 
 export const GAME_MASTER_PHONE = '393358442641';
 
-// Route A: parte dal Porto, va a ovest (Lungomare/Ville), poi est (Cascata/Basilica/Faro), poi sud
-export const ROUTE_A = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+// Route A (Taccuino Nero): Porto > ovest lungo il lungomare > ville > Cristo Re > Gnam > est verso Cascata/collina > sud
+export const ROUTE_A = [1, 2, 3, 4, 5, 9, 6, 7, 8, 10, 11];
 
-// Route B: parte dalla collina (Colonna/Basilica/Faro), poi Cascata/Porto, poi ovest (Lungomare/Ville), poi sud
-export const ROUTE_B = [7, 8, 9, 10, 6, 1, 2, 3, 4, 5, 11, 12];
+// Route B (Taccuino Rosso): collina (Colonna/Basilica/Faro) > Cascata > Porto > ovest lungo lungomare/ville > sud
+export const ROUTE_B = [7, 8, 10, 6, 1, 2, 9, 3, 4, 5, 11];
 
 export function getRouteOrder(route: 'A' | 'B'): number[] {
   return route === 'A' ? ROUTE_A : ROUTE_B;
@@ -37,10 +37,10 @@ export const stages: Stage[] = [
   {
     id: 2,
     name: 'Sfida: La Pizzica dei Contrabbandieri',
-    lat: 39.7965,
-    lng: 18.3612,
-    proximityRadius: 80,
-    hint: 'Ferruccio dice: "Prima di proseguire, dovete dimostrare che avete il sangue salentino nelle vene!" Restate nei pressi del porto.',
+    lat: 39.7960,
+    lng: 18.3595,
+    proximityRadius: 50,
+    hint: 'Ferruccio dice: "Prima di proseguire, dovete dimostrare che avete il sangue salentino nelle vene!" Cercate la piazzetta dove i pescatori bevono il caffe la mattina, poco oltre il molo.',
     puzzle: {
       type: 'challenge',
       question: 'Inviate il video al Game Master per ricevere il codice segreto.',
@@ -83,14 +83,14 @@ export const stages: Stage[] = [
   {
     id: 5,
     name: 'Sfida: Foto da Contrabbandiere',
-    lat: 39.7988,
-    lng: 18.3558,
-    proximityRadius: 80,
-    hint: 'Ferruccio dice: "Un buon contrabbandiere sa mimetizzarsi. Dimostratemi che sapete farlo!" Restate nella zona delle ville.',
+    lat: 39.7972,
+    lng: 18.3546,
+    proximityRadius: 50,
+    hint: 'Ferruccio dice: "Un buon contrabbandiere sa mimetizzarsi. Dimostratemi che sapete farlo!" Cercate la chiesa dove il Cristo è Re, non lontano dalle ville dei signori.',
     puzzle: {
       type: 'challenge',
       question: 'Inviate la foto al Game Master per ricevere il codice segreto.',
-      challengeDescription: 'Fate una FOTO DI GRUPPO in posa da "contrabbandieri sospetti" davanti alla villa più bella che trovate. Espressioni serie, occhiali da sole, aria misteriosa!'
+      challengeDescription: 'Fate una FOTO DI GRUPPO in posa da "contrabbandieri sospetti" davanti alla chiesa o alla villa più bella che trovate. Espressioni serie, occhiali da sole, aria misteriosa!'
     },
     acceptedAnswers: ['foto1', 'FOTO1'],
     storyFragment: '"Perfetti! Sembrate proprio una banda di contrabbandieri. Ma ricordatevi: i veri contrabbandieri non si facevano mai fotografare. Solo la \'luna\' ci vedeva in faccia. Proseguite verso la cascata — là vi aspetta il prossimo segreto."',
@@ -113,17 +113,17 @@ export const stages: Stage[] = [
   },
   {
     id: 7,
-    name: 'Colonna Mariana',
-    lat: 39.7962,
-    lng: 18.3678,
-    proximityRadius: 30,
-    hint: 'Sali fino in cima, dove la Madonna guarda il mare da quasi 400 anni. Un grande piazzale con colonnato ti aspetta.',
+    name: 'La Scogliera dei Contrabbandieri',
+    lat: 39.7928,
+    lng: 18.3530,
+    proximityRadius: 50,
+    hint: 'Scendete dove le rocce si fanno aguzze e il mare morde la costa. I contrabbandieri calavano le corde di notte lungo queste pareti. Cercate il punto dove la strada finisce e inizia il sentiero verso il mare.',
     puzzle: {
-      type: 'math',
-      question: 'La colonna è alta circa 18 metri. Se la sua ombra a mezzogiorno del 21 giugno misura 7 metri, quanti metri più alta è la colonna rispetto alla sua ombra?'
+      type: 'text',
+      question: 'I contrabbandieri usavano le grotte lungo questa costa per nascondere il carico. Come si chiamano le grotte visibili da questo punto, dedicate a un santo pescatore?'
     },
-    acceptedAnswers: ['11'],
-    storyFragment: '"Dalla piazza vedevo tutto: il porto, le barche della Finanza, le luci dei miei compagni sulla costa. Conoscevo ogni \'ruga\' del paese come le mie tasche. Bastava un segnale con la lanterna e sapevamo se la via era libera. Il quinto pezzo l\'ho messo dove la Madonna non guarda — dietro la base della colonna, lato nord."',
+    acceptedAnswers: ['cazzafri', 'grotte cazzafri', 'grotte di cazzafri'],
+    storyFragment: '"Da questa scogliera calavo le corde fino al mare. La \'risacca\' copriva il rumore dei remi. Nessuno sentiva niente. Avevo tre punti di discesa: uno qui, uno sotto il faro, uno vicino alla grotta del diavolo. Di notte le rocce diventano nere come il peccato. Il quinto pezzo della mappa è incastrato in una fessura, dove solo le lucertole arrivano."',
     points: 100
   },
   {
@@ -131,7 +131,7 @@ export const stages: Stage[] = [
     name: 'Basilica de Finibus Terrae',
     lat: 39.7964,
     lng: 18.3685,
-    proximityRadius: 40,
+    proximityRadius: 30,
     hint: "La chiesa dove finisce la terra. Costruita dove prima c'era un tempio pagano. Dicono che San Pietro sia passato proprio di qui.",
     puzzle: {
       type: 'text',
@@ -144,10 +144,10 @@ export const stages: Stage[] = [
   {
     id: 9,
     name: 'Sfida: Il Grido di Ferruccio',
-    lat: 39.7957,
-    lng: 18.3676,
-    proximityRadius: 80,
-    hint: 'Ferruccio dice: "Siete quasi alla fine! Ma prima... una prova di coraggio!" Restate vicino alla Basilica.',
+    lat: 39.7971,
+    lng: 18.3586,
+    proximityRadius: 50,
+    hint: 'Ferruccio dice: "Siete quasi alla fine! Ma prima... una prova di coraggio!" Andate dove si mangia e si beve sul lungomare — il posto che fa rima con "fame".',
     puzzle: {
       type: 'challenge',
       question: 'Inviate il video al Game Master per ricevere il codice segreto.',
@@ -162,7 +162,7 @@ export const stages: Stage[] = [
     name: 'Il Faro',
     lat: 39.7959,
     lng: 18.3684,
-    proximityRadius: 40,
+    proximityRadius: 30,
     hint: '47 metri di pietra bianca, 254 gradini a chiocciola, visibile a 50 km. Costruito dove prima c\'era una torre saracena.',
     puzzle: {
       type: 'math',
@@ -174,34 +174,17 @@ export const stages: Stage[] = [
   },
   {
     id: 11,
-    name: 'Punta Ristola',
+    name: 'Punta Ristola — Grotta del Diavolo',
     lat: 39.7896,
     lng: 18.3459,
-    proximityRadius: 60,
-    hint: "Il vero tacco d'Italia — più a sud del faro, più a sud di tutto. Da qui vedi le Tre Porte e senti il mare che entra nelle grotte.",
-    puzzle: {
-      type: 'quiz',
-      question: 'A 85 metri sotto il mare davanti a Punta Ristola giace il relitto di un sommergibile italiano della WWII. Come si chiamava?',
-      options: ['Pietro Micca', 'Leonardo da Vinci', 'Evangelista Torricelli', 'Enrico Toti'],
-      correctIndex: 0
-    },
-    acceptedAnswers: ['pietro micca'],
-    storyFragment: '"Punta Ristola era il punto di scambio. Le barche dalla Grecia arrivavano di notte, scaricavano e ripartivano prima dell\'alba. L\'ottavo pezzo è sotto la scultura della nuotatrice, quella che guarda verso l\'Africa. Quasi ci siamo."',
-    points: 100
-  },
-  {
-    id: 12,
-    name: 'Grotta del Diavolo',
-    lat: 39.7901,
-    lng: 18.3458,
     proximityRadius: 70,
-    hint: "L'ultima tappa è dove i diavoli facevano rimbombare le pareti. 40 metri di lunghezza, 17 di larghezza, dritta verso il mare. L'ingresso è sul dorso della roccia.",
+    hint: "L'ultima tappa: il vero tacco d'Italia, più a sud di tutto. Qui i diavoli facevano rimbombare le pareti della grotta e il mare entrava ruggendo dalle Tre Porte. Ferruccio ha nascosto l'ultimo pezzo dove nessuno ha mai osato cercare.",
     puzzle: {
       type: 'text',
-      question: "L'ultimo enigma di Ferruccio. In ognuno dei primi 10 frammenti del diario, Ferruccio ha nascosto una parola tra apici ('parola'). Prendi la prima lettera di ciascuna, nell'ordine delle tappe: scoprirai il nome della persona più importante della sua vita."
+      question: "L'ultimo enigma di Ferruccio. In ognuno dei primi 10 frammenti del diario, Ferruccio ha nascosto una parola dialettale tra apici ('parola'). Prendi la prima lettera di ciascuna nell'ordine delle pagine del taccuino (tappa 1, 2, 3... fino a 10): scoprirai il nome della persona più importante della sua vita."
     },
     acceptedAnswers: ['addolorata'],
-    storyFragment: '"Qui finisce la corsa. Il carico vero non erano le sigarette — erano le monete d\'oro che mio nonno aveva portato da Corfù nel 1920. Le ho nascoste qui, nella grotta che tutti temevano. Nessuno ha mai avuto il coraggio di cercarle. Fino a oggi. Bravi, \'picciriddhi\'. Il tesoro è vostro."\n\n— Ferruccio \'il Greco\' Cataldo, 14 marzo 1971',
+    storyFragment: '"Qui finisce la corsa. Il carico vero non erano le sigarette — erano le monete d\'oro che mio nonno aveva portato da Corfù nel 1920. Le ho nascoste qui, nella grotta che tutti temevano, dove i diavoli urlavano nel vento. Nessuno ha mai avuto il coraggio di cercarle. Fino a oggi. Bravi, \'picciriddhi\'. Il tesoro è vostro."\n\n— Ferruccio \'il Greco\' Cataldo, 14 marzo 1971',
     points: 200
   }
 ];
