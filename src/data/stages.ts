@@ -53,8 +53,8 @@ export const stages: Stage[] = [
   {
     id: 3,
     name: 'Lungomare Colombo',
-    lat: 39.7953,
-    lng: 18.3527,
+    lat: 39.7963,
+    lng: 18.3567,
     proximityRadius: 50,
     hint: "Cammina dove i signori dell'800 passeggiavano al tramonto. La strada è intitolata a chi scoprì un mondo nuovo.",
     puzzle: {
@@ -99,8 +99,8 @@ export const stages: Stage[] = [
   {
     id: 6,
     name: 'Cascata Monumentale',
-    lat: 39.7967,
-    lng: 18.3659,
+    lat: 39.7969,
+    lng: 18.3669,
     proximityRadius: 50,
     hint: "Dove l'acqua dolce della Puglia intera finisce il suo viaggio e si tuffa nel mare. Conta i gradini se hai fiato.",
     puzzle: {
@@ -129,8 +129,8 @@ export const stages: Stage[] = [
   {
     id: 8,
     name: 'Basilica de Finibus Terrae',
-    lat: 39.7967,
-    lng: 18.3689,
+    lat: 39.7964,
+    lng: 18.3685,
     proximityRadius: 40,
     hint: "La chiesa dove finisce la terra. Costruita dove prima c'era un tempio pagano. Dicono che San Pietro sia passato proprio di qui.",
     puzzle: {
