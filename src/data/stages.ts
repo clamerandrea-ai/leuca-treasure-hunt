@@ -114,8 +114,8 @@ export const stages: Stage[] = [
   {
     id: 7,
     name: 'La Scogliera dei Contrabbandieri',
-    lat: 39.7928,
-    lng: 18.3530,
+    lat: 39.793624,
+    lng: 18.358966,
     proximityRadius: 50,
     hint: 'Scendete dove le rocce si fanno aguzze e il mare morde la costa. I contrabbandieri calavano le corde di notte lungo queste pareti. Cercate il punto dove la strada finisce e inizia il sentiero verso il mare.',
     puzzle: {
