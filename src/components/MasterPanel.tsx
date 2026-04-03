@@ -3,7 +3,7 @@ import { MapContainer, TileLayer, Marker, Popup, Circle } from 'react-leaflet';
 import L from 'leaflet';
 import { useGame } from '../context/GameContext';
 import { stages, GAME_MASTER_PHONE } from '../data/stages';
-import { subscribeToLocations, isFirebaseConfigured } from '../firebase';
+import { subscribeToLocations, isFirebaseConfigured, removeTeam } from '../firebase';
 import type { TeamLocation } from '../types/game';
 
 import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png';
@@ -186,22 +186,34 @@ export function MasterPanel() {
                 {teams.map((team, i) => (
                   <div key={team.teamName} className="parchment-card p-3 flex items-center gap-3">
                     <div
-                      className="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold text-sm"
+                      className="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold text-sm flex-shrink-0"
                       style={{ background: TEAM_COLORS[i % TEAM_COLORS.length] }}
                     >
                       {team.teamName.charAt(0).toUpperCase()}
                     </div>
-                    <div className="flex-1">
+                    <div className="flex-1 min-w-0">
                       <p className="text-sand font-semibold text-sm">{team.teamName}</p>
                       <p className="text-sand/50 text-xs">
                         Step {team.currentStep || team.currentStage}/{stages.length} &middot; Percorso {team.route || 'A'} &middot; {stages.find(s => s.id === team.currentStage)?.name}
                       </p>
                     </div>
                     {team.timestamp && (
-                      <span className="text-sand/30 text-xs">
+                      <span className="text-sand/30 text-xs flex-shrink-0">
                         {new Date(team.timestamp).toLocaleTimeString('it-IT', { hour: '2-digit', minute: '2-digit' })}
                       </span>
                     )}
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        if (confirm(`Rimuovere "${team.teamName}" dal sistema?`)) {
+                          removeTeam(team.teamName);
+                        }
+                      }}
+                      className="w-7 h-7 rounded-full bg-brick/60 text-sand/80 text-sm font-bold flex items-center justify-center flex-shrink-0 active:bg-brick transition-colors"
+                      title={`Rimuovi ${team.teamName}`}
+                    >
+                      &times;
+                    </button>
                   </div>
                 ))}
               </div>

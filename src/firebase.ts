@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app';
-import { getDatabase, ref, set, onValue, serverTimestamp } from 'firebase/database';
+import { getDatabase, ref, set, remove, onValue, serverTimestamp } from 'firebase/database';
 import type { TeamLocation } from './types/game';
 
 const firebaseConfig = {
@@ -66,6 +66,17 @@ export function subscribeToLocations(callback: (teams: TeamLocation[]) => void):
   } catch (e) {
     console.warn('[Firebase] subscribe error:', e);
     return () => {};
+  }
+}
+
+export function removeTeam(teamName: string) {
+  if (!isFirebaseConfigured()) return;
+  try {
+    const db = getDb();
+    const teamRef = ref(db, `locations/${encodeTeamName(teamName)}`);
+    remove(teamRef);
+  } catch (e) {
+    console.warn('[Firebase] remove error:', e);
   }
 }
 
