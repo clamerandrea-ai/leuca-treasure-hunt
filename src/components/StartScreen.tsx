@@ -1,16 +1,31 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useGame } from '../context/GameContext';
 import { Leaderboard } from './Leaderboard';
 import { clearGameState } from '../utils/storage';
-import type { GameRoute } from '../types/game';
+import { subscribeToLocations, isFirebaseConfigured } from '../firebase';
+import type { GameRoute, TeamLocation } from '../types/game';
 
 export function StartScreen() {
-  const { dispatch } = useGame();
+  const { state, dispatch } = useGame();
   const [teamName, setTeamName] = useState('');
   const [showLeaderboard, setShowLeaderboard] = useState(false);
   const [showRouteSelect, setShowRouteSelect] = useState(false);
+  const [activeTeams, setActiveTeams] = useState<TeamLocation[]>([]);
   const tapCountRef = useRef(0);
   const tapTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  // Subscribe to active teams to check which routes are taken
+  useEffect(() => {
+    if (!isFirebaseConfigured()) return;
+    const unsub = subscribeToLocations(setActiveTeams);
+    return unsub;
+  }, []);
+
+  const takenRoutes = activeTeams.reduce<Record<string, string>>((acc, team) => {
+    const r = team.route || 'A';
+    if (!acc[r]) acc[r] = team.teamName;
+    return acc;
+  }, {});
 
   const MASTER_CODE = 'FERRUCCIO71';
 
@@ -117,38 +132,53 @@ export function StartScreen() {
           /* Route selection */
           <div className="space-y-4">
             <p className="text-sand/70 text-sm text-center">
-              Squadra <strong className="text-gold-bright">{teamName.trim()}</strong>, scegliete il vostro percorso:
+              Squadra <strong className="text-gold-bright">{teamName.trim()}</strong>, il taccuino di Ferruccio ha due fascicoli. Quale aprite per primo?
             </p>
 
-            <button
-              onClick={() => handleRouteSelect('A')}
-              className="w-full parchment-card p-4 text-left active:scale-[0.98] transition-transform"
-            >
-              <div className="flex items-center gap-3">
-                <span className="text-3xl">&#9875;</span>
-                <div>
-                  <p className="text-gold-bright font-bold text-base">Percorso del Porto</p>
-                  <p className="text-sand/50 text-xs">
-                    Si parte dal Porto Vecchio, verso il lungomare e le ville, poi su fino al Faro
-                  </p>
-                </div>
-              </div>
-            </button>
+            {(['A', 'B'] as GameRoute[]).map((route) => {
+              const isTaken = !!takenRoutes[route];
+              const takenBy = takenRoutes[route];
+              const isNero = route === 'A';
+              const canOverride = state.devMode;
 
-            <button
-              onClick={() => handleRouteSelect('B')}
-              className="w-full parchment-card p-4 text-left active:scale-[0.98] transition-transform"
-            >
-              <div className="flex items-center gap-3">
-                <span className="text-3xl">&#127981;</span>
-                <div>
-                  <p className="text-gold-bright font-bold text-base">Percorso del Faro</p>
-                  <p className="text-sand/50 text-xs">
-                    Si parte dalla Colonna Mariana e il Faro, poi giu verso il Porto e le ville
-                  </p>
-                </div>
-              </div>
-            </button>
+              return (
+                <button
+                  key={route}
+                  onClick={() => !isTaken || canOverride ? handleRouteSelect(route) : undefined}
+                  disabled={isTaken && !canOverride}
+                  className={`w-full parchment-card p-4 text-left transition-transform ${
+                    isTaken && !canOverride
+                      ? 'opacity-40 cursor-not-allowed'
+                      : 'active:scale-[0.98]'
+                  }`}
+                >
+                  <div className="flex items-center gap-3">
+                    <span className="text-3xl">{isNero ? '\u{1F4D5}' : '\u{1F4D6}'}</span>
+                    <div className="flex-1">
+                      <p className="text-gold-bright font-bold text-base">
+                        {isNero ? 'Il Taccuino Nero' : 'Il Taccuino Rosso'}
+                      </p>
+                      <p className="text-sand/50 text-xs italic">
+                        {isNero
+                          ? 'Il primo fascicolo, macchiato di salsedine e inchiostro'
+                          : 'Il secondo fascicolo, bruciato ai bordi da una lanterna rovesciata'}
+                      </p>
+                      {isTaken && (
+                        <p className="text-brick-light text-xs mt-1 font-semibold">
+                          Gia scelto da "{takenBy}"
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                </button>
+              );
+            })}
+
+            {!isFirebaseConfigured() && (
+              <p className="text-sand/30 text-xs text-center italic">
+                Entrambi i taccuini sono disponibili (tracking offline)
+              </p>
+            )}
 
             <button
               onClick={() => setShowRouteSelect(false)}
