@@ -2,6 +2,20 @@ import type { GameState, LeaderboardEntry } from '../types/game';
 
 const GAME_STATE_KEY = 'leuca-hunt-state';
 const LEADERBOARD_KEY = 'leuca-hunt-leaderboard';
+const DEVICE_ID_KEY = 'leuca-hunt-device-id';
+
+export function getDeviceId(): string {
+  try {
+    let id = localStorage.getItem(DEVICE_ID_KEY);
+    if (!id) {
+      id = Math.random().toString(36).substring(2, 10) + Date.now().toString(36);
+      localStorage.setItem(DEVICE_ID_KEY, id);
+    }
+    return id;
+  } catch {
+    return 'unknown';
+  }
+}
 
 export function saveGameState(state: GameState): void {
   try {

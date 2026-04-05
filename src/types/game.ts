@@ -68,6 +68,7 @@ export type GameAction =
 
 export interface TeamLocation {
   teamName: string;
+  deviceId?: string;
   lat: number;
   lng: number;
   currentStage: number;

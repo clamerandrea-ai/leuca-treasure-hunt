@@ -47,6 +47,11 @@ const challengeIcon = new L.DivIcon({
 
 const TEAM_COLORS = ['#3b82f6', '#ef4444', '#22c55e', '#a855f7', '#f59e0b', '#ec4899', '#06b6d4', '#84cc16'];
 
+function getTeamColor(teamName: string, teamNames: string[]): string {
+  const idx = teamNames.indexOf(teamName);
+  return TEAM_COLORS[idx >= 0 ? idx % TEAM_COLORS.length : 0];
+}
+
 function makeTeamIcon(color: string, label: string) {
   return new L.DivIcon({
     html: `<div style="
@@ -64,6 +69,13 @@ function makeTeamIcon(color: string, label: string) {
   });
 }
 
+interface TeamGroup {
+  teamName: string;
+  players: TeamLocation[];
+  bestStep: number;
+  route: string;
+}
+
 export function MasterPanel() {
   const { dispatch } = useGame();
   const [teams, setTeams] = useState<TeamLocation[]>([]);
@@ -76,6 +88,21 @@ export function MasterPanel() {
     const unsub = subscribeToLocations(setTeams);
     return unsub;
   }, [firebaseOk]);
+
+  // Group players by team name
+  const teamGroups: TeamGroup[] = [];
+  const teamNamesSet = new Set<string>();
+  for (const player of teams) {
+    teamNamesSet.add(player.teamName);
+  }
+  const uniqueTeamNames = Array.from(teamNamesSet);
+
+  for (const name of uniqueTeamNames) {
+    const players = teams.filter(t => t.teamName === name);
+    const bestStep = Math.max(...players.map(p => p.currentStep || p.currentStage || 1));
+    const route = players[0]?.route || 'A';
+    teamGroups.push({ teamName: name, players, bestStep, route });
+  }
 
   const center: [number, number] = [39.7950, 18.3500];
 
@@ -90,7 +117,7 @@ export function MasterPanel() {
           &larr; Esci
         </button>
         <h1 className="text-gold-bright font-bold text-sm">GAME MASTER</h1>
-        <span className="text-sand/40 text-xs">{teams.length} team online</span>
+        <span className="text-sand/40 text-xs">{teamGroups.length} squadre &middot; {teams.length} giocatori</span>
       </div>
 
       {/* Tabs */}
@@ -155,20 +182,24 @@ export function MasterPanel() {
                   />
                 ))}
 
-                {/* Team positions */}
-                {teams.map((team, i) => (
-                  <Marker
-                    key={team.teamName}
-                    position={[team.lat, team.lng]}
-                    icon={makeTeamIcon(TEAM_COLORS[i % TEAM_COLORS.length], team.teamName.charAt(0).toUpperCase())}
-                  >
-                    <Popup>
-                      <strong>{team.teamName}</strong><br />
-                      Step: {team.currentStep || team.currentStage}/{stages.length} &middot; Percorso {team.route || 'A'}<br />
-                      {team.timestamp && `Ultimo aggiornamento: ${new Date(team.timestamp).toLocaleTimeString('it-IT')}`}
-                    </Popup>
-                  </Marker>
-                ))}
+                {/* Player positions — same color per team */}
+                {teams.map((player) => {
+                  const color = getTeamColor(player.teamName, uniqueTeamNames);
+                  const key = `${player.teamName}_${player.deviceId || 'default'}`;
+                  return (
+                    <Marker
+                      key={key}
+                      position={[player.lat, player.lng]}
+                      icon={makeTeamIcon(color, player.teamName.charAt(0).toUpperCase())}
+                    >
+                      <Popup>
+                        <strong>{player.teamName}</strong><br />
+                        Step: {player.currentStep || player.currentStage}/{stages.length} &middot; Percorso {player.route || 'A'}<br />
+                        {player.timestamp && `Ultimo aggiornamento: ${new Date(player.timestamp).toLocaleTimeString('it-IT')}`}
+                      </Popup>
+                    </Marker>
+                  );
+                })}
               </MapContainer>
             </div>
 
@@ -179,59 +210,63 @@ export function MasterPanel() {
               </div>
             )}
 
-            {/* Teams list */}
-            {teams.length > 0 && (
+            {/* Teams list — grouped by team */}
+            {teamGroups.length > 0 && (
               <div className="space-y-2">
                 <h3 className="text-gold-bright font-bold text-sm">Squadre attive</h3>
-                {teams.map((team, i) => (
-                  <div key={team.teamName} className="parchment-card p-3 flex items-center gap-3">
-                    <div
-                      className="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold text-sm flex-shrink-0"
-                      style={{ background: TEAM_COLORS[i % TEAM_COLORS.length] }}
-                    >
-                      {team.teamName.charAt(0).toUpperCase()}
+                {teamGroups.map((group) => {
+                  const color = getTeamColor(group.teamName, uniqueTeamNames);
+                  const latestTimestamp = Math.max(...group.players.map(p => p.timestamp || 0));
+                  return (
+                    <div key={group.teamName} className="parchment-card p-3 flex items-center gap-3">
+                      <div
+                        className="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold text-sm flex-shrink-0"
+                        style={{ background: color }}
+                      >
+                        {group.teamName.charAt(0).toUpperCase()}
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sand font-semibold text-sm">{group.teamName}</p>
+                        <p className="text-sand/50 text-xs">
+                          Step {group.bestStep}/{stages.length} &middot; Percorso {group.route} &middot; {group.players.length} giocator{group.players.length === 1 ? 'e' : 'i'}
+                        </p>
+                      </div>
+                      {latestTimestamp > 0 && (
+                        <span className="text-sand/30 text-xs flex-shrink-0">
+                          {new Date(latestTimestamp).toLocaleTimeString('it-IT', { hour: '2-digit', minute: '2-digit' })}
+                        </span>
+                      )}
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          if (confirm(`Superare la tappa corrente per "${group.teamName}"? Tutti i giocatori della squadra passeranno alla tappa successiva senza punti.`)) {
+                            sendSkipCommand(group.teamName);
+                          }
+                        }}
+                        className="px-2 py-1 rounded bg-gold/20 border border-gold/40 text-gold-bright text-[10px] font-bold flex-shrink-0 active:bg-gold/40 transition-colors"
+                        title={`Supera tappa per ${group.teamName}`}
+                      >
+                        Supera tappa
+                      </button>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          if (confirm(`Rimuovere "${group.teamName}" e tutti i suoi giocatori dal sistema?`)) {
+                            removeTeam(group.teamName);
+                          }
+                        }}
+                        className="w-7 h-7 rounded-full bg-brick/60 text-sand/80 text-sm font-bold flex items-center justify-center flex-shrink-0 active:bg-brick transition-colors"
+                        title={`Rimuovi ${group.teamName}`}
+                      >
+                        &times;
+                      </button>
                     </div>
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sand font-semibold text-sm">{team.teamName}</p>
-                      <p className="text-sand/50 text-xs">
-                        Step {team.currentStep || team.currentStage}/{stages.length} &middot; Percorso {team.route || 'A'} &middot; {stages.find(s => s.id === team.currentStage)?.name}
-                      </p>
-                    </div>
-                    {team.timestamp && (
-                      <span className="text-sand/30 text-xs flex-shrink-0">
-                        {new Date(team.timestamp).toLocaleTimeString('it-IT', { hour: '2-digit', minute: '2-digit' })}
-                      </span>
-                    )}
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        if (confirm(`Superare la tappa corrente per "${team.teamName}"? La squadra passerà alla tappa successiva senza punti.`)) {
-                          sendSkipCommand(team.teamName);
-                        }
-                      }}
-                      className="px-2 py-1 rounded bg-gold/20 border border-gold/40 text-gold-bright text-[10px] font-bold flex-shrink-0 active:bg-gold/40 transition-colors"
-                      title={`Supera tappa per ${team.teamName}`}
-                    >
-                      Supera tappa
-                    </button>
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        if (confirm(`Rimuovere "${team.teamName}" dal sistema?`)) {
-                          removeTeam(team.teamName);
-                        }
-                      }}
-                      className="w-7 h-7 rounded-full bg-brick/60 text-sand/80 text-sm font-bold flex items-center justify-center flex-shrink-0 active:bg-brick transition-colors"
-                      title={`Rimuovi ${team.teamName}`}
-                    >
-                      &times;
-                    </button>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             )}
 
-            {teams.length === 0 && firebaseOk && (
+            {teamGroups.length === 0 && firebaseOk && (
               <p className="text-sand/40 text-xs text-center">Nessuna squadra online al momento.</p>
             )}
           </div>

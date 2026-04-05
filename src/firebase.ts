@@ -1,6 +1,7 @@
 import { initializeApp } from 'firebase/app';
 import { getDatabase, ref, set, remove, onValue, serverTimestamp } from 'firebase/database';
 import type { TeamLocation } from './types/game';
+import { getDeviceId } from './utils/storage';
 
 const firebaseConfig = {
   apiKey: "AIzaSyAWk_8GWLQ-vsnv0LQ1Ndxk573GJ0GLsCM",
@@ -30,9 +31,12 @@ export function broadcastLocation(teamName: string, lat: number, lng: number, cu
   if (!isFirebaseConfigured()) return;
   try {
     const db = getDb();
-    const teamRef = ref(db, `locations/${encodeTeamName(teamName)}`);
-    set(teamRef, {
+    const deviceId = getDeviceId();
+    const key = `${encodeTeamName(teamName)}_${deviceId}`;
+    const playerRef = ref(db, `locations/${key}`);
+    set(playerRef, {
       teamName,
+      deviceId,
       lat,
       lng,
       currentStage,
@@ -73,8 +77,16 @@ export function removeTeam(teamName: string) {
   if (!isFirebaseConfigured()) return;
   try {
     const db = getDb();
-    const teamRef = ref(db, `locations/${encodeTeamName(teamName)}`);
-    remove(teamRef);
+    const locationsRef = ref(db, 'locations');
+    onValue(locationsRef, (snapshot) => {
+      const data = snapshot.val();
+      if (!data) return;
+      for (const [key, value] of Object.entries(data)) {
+        if ((value as TeamLocation).teamName === teamName) {
+          remove(ref(db, `locations/${key}`));
+        }
+      }
+    }, { onlyOnce: true });
   } catch (e) {
     console.warn('[Firebase] remove error:', e);
   }

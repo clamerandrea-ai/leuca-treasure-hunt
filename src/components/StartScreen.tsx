@@ -21,11 +21,13 @@ export function StartScreen() {
     return unsub;
   }, []);
 
-  const takenRoutes = activeTeams.reduce<Record<string, string>>((acc, team) => {
-    const r = team.route || 'A';
-    if (!acc[r]) acc[r] = team.teamName;
+  const takenRoutes = activeTeams.reduce<Record<string, string>>((acc, player) => {
+    const r = player.route || 'A';
+    if (!acc[r]) acc[r] = player.teamName;
     return acc;
   }, {});
+
+  const currentTeamName = teamName.trim();
 
   const MASTER_CODE = 'FERRUCCIO71';
 
@@ -136,8 +138,8 @@ export function StartScreen() {
             </p>
 
             {(['A', 'B'] as GameRoute[]).map((route) => {
-              const isTaken = !!takenRoutes[route];
               const takenBy = takenRoutes[route];
+              const isTaken = !!takenBy && takenBy !== currentTeamName;
               const isNero = route === 'A';
               const canOverride = state.devMode;
 
