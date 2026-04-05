@@ -17,7 +17,7 @@ export function StageCard({ stage, stepNumber, totalSteps, isNear }: StageCardPr
     <div className="parchment-card p-4 mx-4 max-h-[60vh] overflow-y-auto screen-transition">
       <div className="flex items-center justify-between mb-3">
         <h2 className="text-gold-bright font-bold text-lg">
-          Tappa {stepNumber}: {stage.name}
+          Tappa {stepNumber}: {stage.displayName}
         </h2>
         <span className="text-sand/40 text-xs">
           {stepNumber}/{totalSteps}

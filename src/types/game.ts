@@ -21,6 +21,7 @@ export type Puzzle = PuzzleQuiz | PuzzleText | PuzzleChallenge;
 export interface Stage {
   id: number;
   name: string;
+  displayName: string;
   lat: number;
   lng: number;
   proximityRadius: number;

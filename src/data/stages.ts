@@ -22,6 +22,7 @@ export const stages: Stage[] = [
   {
     id: 1,
     name: 'Porto Vecchio',
+    displayName: 'Il nodo del sale',
     lat: 39.7968,
     lng: 18.3616,
     proximityRadius: 80,
@@ -37,6 +38,7 @@ export const stages: Stage[] = [
   {
     id: 2,
     name: 'Sfida: La Pizzica dei Contrabbandieri',
+    displayName: 'Sfida: Il tarantismo',
     lat: 39.7960,
     lng: 18.3595,
     proximityRadius: 50,
@@ -53,6 +55,7 @@ export const stages: Stage[] = [
   {
     id: 3,
     name: 'Lungomare Colombo',
+    displayName: 'La rotta del Genovese',
     lat: 39.7963,
     lng: 18.3567,
     proximityRadius: 50,
@@ -68,6 +71,7 @@ export const stages: Stage[] = [
   {
     id: 4,
     name: 'Le Ville',
+    displayName: 'Le maschere di tufo',
     lat: 39.7990,
     lng: 18.3555,
     proximityRadius: 60,
@@ -83,6 +87,7 @@ export const stages: Stage[] = [
   {
     id: 5,
     name: 'Sfida: Foto da Contrabbandiere',
+    displayName: 'Sfida: Ombre senza volto',
     lat: 39.7972,
     lng: 18.3546,
     proximityRadius: 50,
@@ -99,6 +104,7 @@ export const stages: Stage[] = [
   {
     id: 6,
     name: 'Cascata Monumentale',
+    displayName: 'La bocca della sete',
     lat: 39.7969,
     lng: 18.3669,
     proximityRadius: 50,
@@ -114,6 +120,7 @@ export const stages: Stage[] = [
   {
     id: 7,
     name: 'La Scogliera dei Contrabbandieri',
+    displayName: 'I denti del diavolo',
     lat: 39.793624,
     lng: 18.358966,
     proximityRadius: 50,
@@ -129,6 +136,7 @@ export const stages: Stage[] = [
   {
     id: 8,
     name: 'Basilica de Finibus Terrae',
+    displayName: "L'ultima candela",
     lat: 39.7964,
     lng: 18.3685,
     proximityRadius: 30,
@@ -144,6 +152,7 @@ export const stages: Stage[] = [
   {
     id: 9,
     name: 'Sfida: Il Grido di Ferruccio',
+    displayName: 'Sfida: La voce del Greco',
     lat: 39.7971,
     lng: 18.3586,
     proximityRadius: 50,
@@ -160,6 +169,7 @@ export const stages: Stage[] = [
   {
     id: 10,
     name: 'Il Faro',
+    displayName: 'Il ciclope bianco',
     lat: 39.7959,
     lng: 18.3684,
     proximityRadius: 30,
@@ -175,6 +185,7 @@ export const stages: Stage[] = [
   {
     id: 11,
     name: 'Punta Ristola — Grotta del Diavolo',
+    displayName: 'La gola che urla',
     lat: 39.7896,
     lng: 18.3459,
     proximityRadius: 70,
