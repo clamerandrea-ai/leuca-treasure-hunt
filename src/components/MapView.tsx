@@ -1,4 +1,4 @@
-import { MapContainer, TileLayer, Marker, Popup, Circle, useMap } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import L from 'leaflet';
 import { useEffect } from 'react';
 import { useGame } from '../context/GameContext';
@@ -73,8 +73,8 @@ export function MapView({ userPosition }: MapViewProps) {
   const currentStage = getStageForStep(state.currentStep, state.route);
   const routeOrder = getRouteOrder(state.route);
 
-  const center: [number, number] = currentStage
-    ? [currentStage.lat, currentStage.lng]
+  const center: [number, number] = userPosition
+    ? [userPosition.lat, userPosition.lng]
     : [39.7950, 18.3530];
 
   return (
@@ -103,34 +103,19 @@ export function MapView({ userPosition }: MapViewProps) {
             </Marker>
           ))}
 
-        {/* Current stage */}
-        {currentStage && state.screen === 'playing' && (
-          <>
-            <Circle
-              center={[currentStage.lat, currentStage.lng]}
-              radius={currentStage.proximityRadius}
-              pathOptions={{
-                color: 'rgba(196, 162, 101, 0.4)',
-                fillColor: 'rgba(196, 162, 101, 0.1)',
-                fillOpacity: 0.3,
-              }}
-            />
-            <Marker position={[currentStage.lat, currentStage.lng]} icon={goldIcon}>
-              <Popup>{currentStage.name}</Popup>
-            </Marker>
-          </>
-        )}
+        {/* Current stage: hidden in normal mode — players must use hints + distance only */}
 
-        {/* Dev mode: show all route stages */}
+        {/* Dev mode: show all route stages including current */}
         {state.devMode &&
           routeOrder
-            .filter(id => !state.completedStages.includes(id) && id !== currentStage?.id)
+            .filter(id => !state.completedStages.includes(id))
             .map(id => {
               const s = stages.find(st => st.id === id);
               if (!s) return null;
+              const isCurrent = id === currentStage?.id;
               return (
-                <Marker key={s.id} position={[s.lat, s.lng]} icon={goldIcon} opacity={0.3}>
-                  <Popup>{s.name} (nascosta)</Popup>
+                <Marker key={s.id} position={[s.lat, s.lng]} icon={goldIcon} opacity={isCurrent ? 1 : 0.3}>
+                  <Popup>{s.name} {isCurrent ? '(corrente)' : '(nascosta)'}</Popup>
                 </Marker>
               );
             })}

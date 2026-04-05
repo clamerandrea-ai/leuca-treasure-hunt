@@ -3,6 +3,7 @@ import { useGame } from '../context/GameContext';
 import { useGeolocation } from '../hooks/useGeolocation';
 import { useProximity } from '../hooks/useProximity';
 import { useLocationBroadcast } from '../hooks/useLocationBroadcast';
+import { subscribeToCommands, isFirebaseConfigured } from '../firebase';
 import { getStageForStep, getRouteOrder } from '../data/stages';
 import { clearGameState } from '../utils/storage';
 import { MapView } from './MapView';
@@ -49,6 +50,19 @@ export function PlayingScreen() {
       if (navigator.vibrate) navigator.vibrate(200);
     }
   }, [state.isNearStage, state.showPuzzle, state.showStory]);
+
+  // Listen for Game Master skip command
+  useEffect(() => {
+    if (!isFirebaseConfigured() || !state.teamName) return;
+    const unsub = subscribeToCommands(state.teamName, (action) => {
+      if (action === 'skip') {
+        if (navigator.vibrate) navigator.vibrate([100, 50, 100, 50, 100]);
+        dispatch({ type: 'SOLVE_PUZZLE', points: 0 });
+        dispatch({ type: 'NEXT_STAGE' });
+      }
+    });
+    return unsub;
+  }, [state.teamName, dispatch]);
 
   if (!currentStage) return null;
 

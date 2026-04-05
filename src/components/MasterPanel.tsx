@@ -3,7 +3,7 @@ import { MapContainer, TileLayer, Marker, Popup, Circle } from 'react-leaflet';
 import L from 'leaflet';
 import { useGame } from '../context/GameContext';
 import { stages, GAME_MASTER_PHONE } from '../data/stages';
-import { subscribeToLocations, isFirebaseConfigured, removeTeam } from '../firebase';
+import { subscribeToLocations, isFirebaseConfigured, removeTeam, sendSkipCommand } from '../firebase';
 import type { TeamLocation } from '../types/game';
 
 import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png';
@@ -202,6 +202,18 @@ export function MasterPanel() {
                         {new Date(team.timestamp).toLocaleTimeString('it-IT', { hour: '2-digit', minute: '2-digit' })}
                       </span>
                     )}
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        if (confirm(`Superare la tappa corrente per "${team.teamName}"? La squadra passerà alla tappa successiva senza punti.`)) {
+                          sendSkipCommand(team.teamName);
+                        }
+                      }}
+                      className="px-2 py-1 rounded bg-gold/20 border border-gold/40 text-gold-bright text-[10px] font-bold flex-shrink-0 active:bg-gold/40 transition-colors"
+                      title={`Supera tappa per ${team.teamName}`}
+                    >
+                      Supera tappa
+                    </button>
                     <button
                       onClick={(e) => {
                         e.stopPropagation();

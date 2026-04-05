@@ -80,6 +80,39 @@ export function removeTeam(teamName: string) {
   }
 }
 
+// --- Skip stage commands (Game Master → Player) ---
+
+export function sendSkipCommand(teamName: string) {
+  if (!isFirebaseConfigured()) return;
+  try {
+    const db = getDb();
+    const cmdRef = ref(db, `commands/${encodeTeamName(teamName)}`);
+    set(cmdRef, { action: 'skip', timestamp: serverTimestamp() });
+  } catch (e) {
+    console.warn('[Firebase] sendSkip error:', e);
+  }
+}
+
+export function subscribeToCommands(teamName: string, callback: (action: string) => void): () => void {
+  if (!isFirebaseConfigured()) return () => {};
+  try {
+    const db = getDb();
+    const cmdRef = ref(db, `commands/${encodeTeamName(teamName)}`);
+    const unsubscribe = onValue(cmdRef, (snapshot) => {
+      const data = snapshot.val();
+      if (data?.action) {
+        callback(data.action);
+        // Consume the command immediately
+        remove(cmdRef);
+      }
+    });
+    return unsubscribe;
+  } catch (e) {
+    console.warn('[Firebase] subscribeCommands error:', e);
+    return () => {};
+  }
+}
+
 function encodeTeamName(name: string): string {
   return name.replace(/[.#$[\]]/g, '_');
 }
