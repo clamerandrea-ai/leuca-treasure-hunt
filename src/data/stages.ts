@@ -156,7 +156,7 @@ export const stages: Stage[] = [
     lat: 39.7971,
     lng: 18.3586,
     proximityRadius: 50,
-    hint: 'Ferruccio dice: "Siete quasi alla fine! Ma prima... una prova di coraggio!" Andate dove si mangia e si beve sul lungomare — il posto che fa rima con "fame".',
+    hint: 'Ferruccio dice: "Siete quasi alla fine! Ma prima... una prova di coraggio!" Cercate il punto sul lungomare dove la gente si siede a mangiare con il mare davanti agli occhi.',
     puzzle: {
       type: 'challenge',
       question: 'Inviate il video al Game Master per ricevere il codice segreto.',
